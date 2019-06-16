@@ -1,0 +1,3 @@
+{"status":"complete","address":"19uU1ULcuhkexRzZbBAN4QaGL5EznPtPYF","withdraw":"0x53e85c83f5dc0ee6670d9a32ab9cadb9d46f1a3b","incomingCoin":0.00413635,"incomingType":"BTC","outgoingCoin":"0.05515458","outgoingType":"ETH","transaction":"0xbdac05d0356e5e0bb9c2c42acbef7ab9d75e440dea5e266581a61b80ab61261c3","transactionURL":"https://etherscan.io/tx/0xbdac05d0356e5e0bb9c2c42acbef7ab9d75e440dea5e266581a61b80ab61261c3"}
+{"status":"error","address":"1CM3tBoZM37QHrVM3wAP4iEUK8zj","error":"This address is NOT a ShapeShift deposit address. Do not send anything to it."}
+

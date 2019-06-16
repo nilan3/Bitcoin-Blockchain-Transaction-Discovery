@@ -1,0 +1,22 @@
+spark:
+  appName: transaction-discovery
+  master: local[*]
+  shufflePartitions: 4
+  outputMode: append
+  checkpointLocation: src/main/resources/checkpoints
+  consoleWriter: false
+
+kafka:
+  bootstrapServers: localhost:9092
+#  bootstrapServers: host.docker.internal:9092
+  maxOffsetsPerTrigger: 10000
+  startingOffsets: earliest
+  topicInput: raw_shapeshift_blockchain_transactions_v1
+  topicOutput: completed_shapeshift_blockchain_transactions_v1
+
+file:
+  maxFilesPerTrigger: 1
+  inputPath: src/main/resources/input
+
+state:
+  timeout: 60 minutes
