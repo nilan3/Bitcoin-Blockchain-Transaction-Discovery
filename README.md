@@ -11,7 +11,7 @@ The pipeline consists of 2 phases:
 	- state timeout (when data for an address is not seen for a period of time, it's saved state will be removed) can be configured in `configurations/transaction_discovery.yml`
 	- spark uses checkpointing to store kafka offsets in HDFS - allows the application to continue reading from where it left off at in the case of any failures.
 	
-Note: Spark jobs are running in local mode without connection to a mesos cluster
+Note: Spark jobs are running in local mode without connection to a mesos cluster. Also there is no HDFS cluster so checkpointing/state is stored on local FS.
 
 ### Local Environment
 - Docker Engine v18.09.2 (tested with constraints `CPU: 6 cores` and `MEM: 8 GB`
