@@ -21,7 +21,6 @@ Tested on Mac OS X v10.14.3
 ```bash
 git clone https://github.com/nilan3/Bitcoin-Blockchain-Transaction-Discovery.git
 ```
-If you wish to install ELK stack, uncomment lines in `docker-compose.yml`
 ```bash
 docker compose up -d
 ```
