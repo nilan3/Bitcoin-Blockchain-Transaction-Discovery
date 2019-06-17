@@ -14,7 +14,7 @@ The pipeline consists of 2 phases:
 Note: Spark jobs are running in local mode without connection to a mesos cluster. Also there is no HDFS cluster so checkpointing/state is stored on local FS.
 
 ### Local Environment
-- Docker Engine v18.09.2 (tested with constraints `CPU: 6 cores` and `MEM: 8 GB`
+- Docker Engine v18.09.2 (tested with constraints `CPU: 4 cores` and `MEM: 8 GB`
 - Docker Compose v1.23.2
 - Kafkacat ([https://github.com/edenhill/kafkacat](https://github.com/edenhill/kafkacat))
 
