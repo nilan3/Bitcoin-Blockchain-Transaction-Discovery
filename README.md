@@ -10,6 +10,8 @@ The pipeline consists of 2 phases:
 - **Transaction discovery**: Structured Streaming job which reads from kafka topic `raw_shapeshift_blockchain_transactions_v1` as a JSON stream and checks for changes in transaction for each unique address. This is achieved with custom stateful processing using user defined `GroupState`. Any new transactions detected for a specific address is sent to the output kafka topic `completed_shapeshift_blockchain_transactions_v1`.
 	- state timeout (when data for an address is not seen for a period of time, it's saved state will be removed) can be configured in `configurations/transaction_discovery.yml`
 	- spark uses checkpointing to store kafka offsets in HDFS - allows the application to continue reading from where it left off at in the case of any failures.
+	
+Note: Spark jobs are running in local mode without connection to a mesos cluster
 
 ### Local Environment
 - Docker Engine v18.09.2 (tested with constraints `CPU: 6 cores` and `MEM: 8 GB`
