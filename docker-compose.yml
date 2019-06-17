@@ -1,14 +1,16 @@
 ---
-version: '2'
+version: '3'
 
 services:
   zookeeper:
     image: confluentinc/cp-zookeeper:latest
     ports:
       - 2181:2181
+    restart: on-failure
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
+      JVMFLAGS: "-Xmx1G -Xms1G"
     extra_hosts:
       - "moby:127.0.0.1"
       - "localhost: 127.0.0.1"
@@ -20,6 +22,7 @@ services:
       - 9092:9092
     depends_on:
       - zookeeper
+    restart: on-failure
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ADVERTISED_HOST_NAME: kafka
@@ -27,45 +30,83 @@ services:
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_HEAP_OPTS: "-Xmx1G -Xms1G"
     extra_hosts:
       - "moby:127.0.0.1"
       - "localhost: 127.0.0.1"
 
-#  elasticsearch:
-#    image: docker.elastic.co/elasticsearch/elasticsearch:7.1.1
-#    ports:
-#      - "9200:9200"
-#      - "9300:9300"
-#    environment:
-#      discovery.type: "single-node"
-#      ES_JAVA_OPTS: "-Xmx256m -Xms256m"
-#      ELASTIC_PASSWORD: password
-#    extra_hosts:
-#      - "moby:127.0.0.1"
-#      - "localhost: 127.0.0.1"
-#
-#  kibana:
-#    image: docker.elastic.co/kibana/kibana:7.1.1
-#    ports:
-#      - "5601:5601"
-#    depends_on:
-#      - elasticsearch
-#    extra_hosts:
-#      - "moby:127.0.0.1"
-#      - "localhost: 127.0.0.1"
-#
-#  logstash:
-#    image: docker.elastic.co/logstash/logstash:7.1.1
-#    volumes:
-#      - ./logstash/pipeline:/usr/share/logstash/pipeline:ro
-#    ports:
-#      - "5000:5000"
-#      - "9600:9600"
-#    depends_on:
-#      - elasticsearch
-#      - kafka
-#    environment:
-#      LS_JAVA_OPTS: "-Xmx256m -Xms256m"
-#    extra_hosts:
-#      - "moby:127.0.0.1"
-#      - "localhost: 127.0.0.1"
+  spark_transaction_collection:
+    build: .
+    network_mode: "host"
+    volumes:
+      - ./configurations:/spark/processing-conf
+    depends_on:
+      - kafka
+    environment:
+      SPARK_LOCAL_IP: 127.0.0.1
+    restart: on-failure
+    extra_hosts:
+      - "moby:127.0.0.1"
+      - "localhost: 127.0.0.1"
+    command: "/spark/bin/spark-submit --jars /spark/jars/blockchain-transaction-discovery-1.0.0.jar --class com.elliptic.medm.application.transactioncollection.TransactionCollectionApplication /spark/examples/jars/spark-examples_2.11-2.4.3.jar /spark/processing-conf/transaction_collection.yml"
+
+  spark_transaction_discovery:
+    build: .
+    network_mode: "host"
+    volumes:
+      - ./configurations:/spark/processing-conf
+    depends_on:
+      - spark_transaction_collection
+    environment:
+      SPARK_LOCAL_IP: 127.0.0.1
+    restart: on-failure
+    extra_hosts:
+      - "moby:127.0.0.1"
+      - "localhost: 127.0.0.1"
+    command: "/spark/bin/spark-submit --jars /spark/jars/blockchain-transaction-discovery-1.0.0.jar --class com.elliptic.medm.application.transactiondiscovery.TransactionDiscoveryApplication /spark/examples/jars/spark-examples_2.11-2.4.3.jar /spark/processing-conf/transaction_discovery.yml"
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.1.1
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      discovery.type: "single-node"
+      ES_JAVA_OPTS: "-Xmx1G -Xms1G"
+      ELASTIC_PASSWORD: "password"
+    restart: on-failure
+    extra_hosts:
+      - "moby:127.0.0.1"
+      - "localhost: 127.0.0.1"
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.1.1
+    ports:
+      - "5601:5601"
+    depends_on:
+      - elasticsearch
+    restart: on-failure
+    environment:
+      JAVA_OPTS: "-Xmx1G"
+      ES_JAVA_OPTS: "-Xmx1G -Xms1G"
+    extra_hosts:
+      - "moby:127.0.0.1"
+      - "localhost: 127.0.0.1"
+
+  logstash:
+    image: docker.elastic.co/logstash/logstash:7.1.1
+    network_mode: "host"
+    volumes:
+      - ./logstash/pipeline:/usr/share/logstash/pipeline:ro
+    ports:
+      - "5000:5000"
+      - "9600:9600"
+    depends_on:
+      - elasticsearch
+      - kafka
+    restart: on-failure
+    environment:
+      LS_JAVA_OPTS: "-Xmx512m -Xms512m"
+    extra_hosts:
+      - "moby:127.0.0.1"
+      - "localhost: 127.0.0.1"

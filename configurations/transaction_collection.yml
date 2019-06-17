@@ -1,14 +1,13 @@
 spark:
   appName: transaction-collection
   master: local[*]
-  shufflePartitions: 4
+  shufflePartitions: 1
   outputMode: append
   checkpointLocation: src/main/resources/checkpoints/collection
   consoleWriter: false
 
 kafka:
   bootstrapServers: localhost:9092
-#  bootstrapServers: host.docker.internal:9092
   maxOffsetsPerTrigger: 10000
   topicOutput: raw_shapeshift_blockchain_transactions_v1
 
@@ -19,3 +18,4 @@ collection:
   api: https://shapeshift.io/txStat/
   addresses:
     - 19uU1ULcuhkexRzZbBAN4QaGL5EznPtPYF
+    - 1CM3tBoZM37QHrVM3wAP4iEUK8zj
