@@ -40,7 +40,7 @@ kafkacat -C -b localhost:9092 -o -5 -t completed_shapeshift_blockchain_transacti
 ```
 ![alt text](https://raw.githubusercontent.com/nilan3/Bitcoin-Blockchain-Transaction-Discovery/master/kafkacat.png)
 
-Access Kibana on [http://localhost:5601/](http://localhost:5601/) and create index patterns `raw_shapeshift_blockchain_transactions_v1-*` and `completed_shapeshift_blockchain_transactions_v1-*` in order to visualise data from kafka topics.
+Access Kibana on [http://localhost:5601/](http://localhost:5601/) and create index patterns `raw_shapeshift_blockchain_transactions_v1-*` and `completed_shapeshift_blockchain_transactions_v1-*` with timestamp field `@timestamp` in order to visualise data from kafka topics.
 
 Data from kafka topics are ingested into ElasticSearch via Logstash; index names can be changed in the pipeline config `logstash/pipeline/kafka-ingestion.conf`
 
