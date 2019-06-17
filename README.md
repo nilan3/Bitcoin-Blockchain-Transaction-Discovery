@@ -47,7 +47,7 @@ Data from kafka topics are ingested into ElasticSearch via Logstash; index names
 ![alt text](https://raw.githubusercontent.com/nilan3/Bitcoin-Blockchain-Transaction-Discovery/master/transaction_collection.png)
 ![alt text](https://raw.githubusercontent.com/nilan3/Bitcoin-Blockchain-Transaction-Discovery/master/transaction_discovery.png)
 
-If you wish to include more deposit addresses for monitoring new transactions, update list in config `configurations/transaction_collection.yml` and restart transaction collection spark job
+If you wish to include more deposit addresses for monitoring new transactions, update `addresses` list in config `configurations/transaction_collection.yml` and restart transaction collection spark job
 
 ```bash
 docker restart bitcoin-blockchain-transaction-discovery_spark_transaction_collection_1
