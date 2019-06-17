@@ -2,6 +2,9 @@ package com.elliptic.medm.common.pipeline.sink
 
 import org.apache.spark.sql.{DataFrame, DataFrameWriter, Row}
 
+/**
+  * Kafka batch sink connector trait
+  */
 trait KafkaBatchSink extends Sink[DataFrameWriter[Row]] {
 
   override def createCustomWriter(pipelines: Array[DataFrame]): Array[DataFrameWriter[Row]] = {

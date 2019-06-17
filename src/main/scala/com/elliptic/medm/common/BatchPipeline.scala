@@ -8,6 +8,9 @@ import org.apache.spark.sql.{DataFrame, DataFrameWriter, Row}
 
 import scala.annotation.tailrec
 
+/**
+  *Extended class for batch pipelines only.
+  */
 abstract class BatchPipeline(config: AppConfig, processor: ProcessorBluePrint)
   extends AbstractPipelines[DataFrameWriter[Row]](config) with Source{
   private val schema: StructType = processor.createSchema()

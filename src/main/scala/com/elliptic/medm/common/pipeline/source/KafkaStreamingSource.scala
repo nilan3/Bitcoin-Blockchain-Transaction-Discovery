@@ -5,6 +5,9 @@ import org.apache.spark.sql.types.{StringType, StructType}
 import org.apache.spark.sql.{DataFrame, SparkSession}
 import org.apache.spark.sql.functions.{col, from_json}
 
+/**
+  * Kafka source connector trait
+  */
 trait KafkaStreamingSource {
 
   protected def createCustomReader(spark: SparkSession, configuration: AppConfig, schema: StructType): DataFrame = {

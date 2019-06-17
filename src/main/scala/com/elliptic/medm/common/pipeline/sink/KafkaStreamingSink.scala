@@ -3,6 +3,9 @@ package com.elliptic.medm.common.pipeline.sink
 import org.apache.spark.sql.streaming.DataStreamWriter
 import org.apache.spark.sql.{DataFrame, Row}
 
+/**
+  * Kafka streaming sink connector trait
+  */
 trait KafkaStreamingSink extends Sink[DataStreamWriter[Row]] {
   override def createCustomWriter(pipelines: Array[DataFrame]): Array[DataStreamWriter[Row]] = {
     val streams = pipelines.zipWithIndex.map { case (pipeline, index) =>

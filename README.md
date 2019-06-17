@@ -16,7 +16,8 @@ The pipeline consists of 2 phases:
 - Docker Compose v1.23.2
 - Kafkacat ([https://github.com/edenhill/kafkacat](https://github.com/edenhill/kafkacat))
 
-### Building and Running Stack
+### Usage
+Tested on Mac OS X v10.14.3
 ```bash
 git clone https://github.com/nilan3/Bitcoin-Blockchain-Transaction-Discovery.git
 ```

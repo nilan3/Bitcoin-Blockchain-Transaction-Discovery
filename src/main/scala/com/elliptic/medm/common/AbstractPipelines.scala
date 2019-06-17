@@ -4,6 +4,9 @@ import com.elliptic.medm.utils.AppConfig
 import com.elliptic.medm.common.pipeline.sink.Sink
 import org.apache.spark.sql.{DataFrame, SparkSession}
 
+/**
+  * Base class for a batch or streaming pipeline
+  */
 abstract class AbstractPipelines[T](config: AppConfig)
   extends Sink[T] with SparkSessionHelper {
 

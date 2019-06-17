@@ -7,6 +7,10 @@ import org.apache.spark.sql.{DataFrame, Row}
 import org.apache.spark.sql.streaming.DataStreamWriter
 import org.apache.spark.sql.types.StructType
 
+
+/**
+  *Extended class for streaming pipelines only.
+  */
 abstract class StreamingPipeline(config: AppConfig, processor: ProcessorBluePrint)
   extends AbstractPipelines[DataStreamWriter[Row]](config) with Source {
   private val schema: StructType = processor.createSchema()

@@ -6,6 +6,9 @@ import scala.collection.JavaConverters._
 
 import org.yaml.snakeyaml.Yaml
 
+/**
+  * Class for reading yaml configuration file
+  */
 class AppConfig (configInputStream: InputStream) extends Serializable {
   val configMap: java.util.Map[String, Any] = new Yaml().load[java.util.Map[String, Any]](configInputStream)
 

@@ -3,6 +3,9 @@ package com.elliptic.medm.common.pipeline.sink
 import com.elliptic.medm.utils.AppConfig
 import org.apache.spark.sql.{DataFrame, SparkSession}
 
+/**
+  * Base trait for sink connector
+  */
 trait Sink[T] {
   protected val configuration: AppConfig
   protected val spark: SparkSession
