@@ -3,7 +3,7 @@
 Detect new transactions for a range of deposit addresses using Shapeshift API
 
 ### Pipeline Architecture
-![alt text](https://raw.githubusercontent.com/nilan3/Bitcoin-Blockchain-Transaction-Discovery/master/pipeline_architecture.png)
+![alt text](https://raw.githubusercontent.com/nilan3/Bitcoin-Blockchain-Transaction-Discovery/master/pipeline-architecture.png)
 The pipeline consists of 2 phases:
 - **Transaction collection**: Batch Spark job which takes a list of address and distributes them amongst its workers before querying the shapeshift API to obtain the latest transaction. This is done every interval and JSON response is sent into kafka topic `raw_shapeshift_blockchain_transactions_v1`.
 	- the list of deposit addresses and collection interval can be configured in `configurations/transaction_collection.yml`.
